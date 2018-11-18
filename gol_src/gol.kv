@@ -1,0 +1,83 @@
+#:kivy 1.10.0
+
+<baseClass>:
+	orientation:"vertical"
+	menuBoundry: menu.top
+	runDelay: 1 - delay.value
+	dragDraw:True
+	delClear:True
+	
+	ScatterPlaneLayout:
+		id:layoutS
+		do_collide_after_children:True
+		auto_bring_to_front: False
+		scale_min:.3
+		scale_max:5.
+		do_rotation: False
+	
+	####menu####
+	GridLayout:
+		id: menu
+		size_hint_y: 0.1
+		row_default_height:30
+		cols:5
+		
+		canvas:
+			Color:
+				rgb:(0, 0.0078, 0.17)
+			Rectangle:
+				size:self.size
+				pos:self.pos
+		#####row 1#####
+		Button:
+			text:"Stop" if root.running else "Start"
+			on_press: root.runToggle()
+		Button:
+			text:"Step"
+			disabled: root.running
+			on_press: root.step()
+		Button:
+			text:"Clear"
+			disabled: root.running
+			on_press: root.clear()
+		Button:
+			text:"Erase history on:\nClear" if root.delClear else "Erase history on:\nStart"
+			on_press: root.running = False
+			halign: 'center'
+			disabled: root.running
+			on_press: root.eraseToggle()
+		Button:
+			text:"drag mode: draw" if root.dragDraw else "drag mode: erase"
+			disabled: root.running
+			on_press: root.dragModeToggle()	
+		#####row 2#####
+		Label:
+			text: "speed:"
+		Slider:
+			id: delay
+			range: (0.1, 1)
+			step: 0.05
+			value: 0.5
+			value_track:False
+			cursor_size: (26, 26)
+			padding: 13
+			on_value: root.updateSpeed()
+		Label:
+			text: "generation: " + str(root.generation[int(hist.value)]) +"\nhistory:"
+			halign: 'right'
+		Slider:
+			id: hist
+			cursor_size: (26, 26)
+			padding: 13
+			value_track:True
+			value_track_color: [0.5294,0.8078,0.9803,1]
+			range: (0, len(root.history) - 1 if len(root.history) > 0 else 0)
+			step: 1
+			width:self.width
+			disabled: root.running or len(root.history) < 2
+			value: len(root.history) - 1 if len(root.history) > 0 else 0
+			## args[1] = tocuh event
+			on_touch_move: root.browseHistory(self, args[1])
+		Button:
+			text: "About"
+			on_press: root.about()
