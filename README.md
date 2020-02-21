@@ -3,6 +3,8 @@ Game of life built with python and the kivy library
 
 A simple user interface for [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life). It explores different ways to achieve functionallity with the library: trough the .kv files, class inheritance, and (admittedly not a good idea) hacking into the source code of one class and substituting the altered functions
 
+![](gol_preview.gif)
+
 ## Rquirements
 * Python 2.7
 * [Kivy](https://kivy.org/#home)
