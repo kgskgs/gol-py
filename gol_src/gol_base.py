@@ -62,14 +62,14 @@ class baseClass(BoxLayout):
 
         with transformPlane.canvas:
             Color(0.4,0.4,0.4)
-            for x in range(HALF_LENGTH*2/SQ_SIZE + 1): #draw grid with vertical lines on the main layout
+            for x in range(HALF_LENGTH*2//SQ_SIZE + 1): #draw grid with vertical lines on the main layout
                 Line(points=[start, -HALF_LENGTH, start, HALF_LENGTH], width=1)
                 Line(points=[-HALF_LENGTH, start, HALF_LENGTH, start], width=1)
-                start += SQ_SIZE
+                start += int(SQ_SIZE)
                       
-        for y in range(HALF_LENGTH*2/SQ_SIZE):
+        for y in range(HALF_LENGTH*2//SQ_SIZE):
             tmpArr = []
-            for x in range(HALF_LENGTH*2/SQ_SIZE):
+            for x in range(HALF_LENGTH*2//SQ_SIZE):
                 tmpArr.append(None)
             self.allCells.append(tmpArr)  
     
